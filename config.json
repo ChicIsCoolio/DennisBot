@@ -1,0 +1,13 @@
+{
+    "welcomeMessage": {
+        "channel": "811874946968059916",
+        "title": "Welcome $username$",
+        "message": "Welcome to Chic's super cool server.",
+        "footer": "$tag$",
+        "color": "#e7acca",
+        "backgroundColor": "#2c2f33",
+        "width": 800,
+        "height": 400,
+        "pfpSize": 256
+    }
+}

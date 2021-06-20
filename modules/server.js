@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const AccessToken = process.env.AccessToken;
 
 module.exports = () => {
     app.get('/', (req, res) => res.redirect('/ping'));

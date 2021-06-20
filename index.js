@@ -1,10 +1,13 @@
 process.on('uncaughtException', err => console.error(err));
-
-const { registerFont } = require('canvas');
-registerFont('fonts/BurbankBigRegular-Bold.otf', { family: 'Burbank Big Rg Bd' });
+require('dotenv').config();
 
 const BotToken = process.env.BotToken;
-const AccessToken = process.env.AccessToken;
+const IsOnReplit = process.env.IsOnReplit.toLowerCase() == 'true';
+
+if (IsOnReplit) {
+    const { registerFont } = require('canvas');
+    registerFont('fonts/BurbankBigRegular-Bold.otf', { family: 'Burbank Big Rg Bd' });
+}
 
 const fs = require('fs');
 const Discord = require('discord.js');
@@ -37,7 +40,7 @@ client.on('ready', () => {
         createCommands();
     });
 
-    slash.on('slashInteraction', interaction => {
+    slash.on('slashInteraction', async interaction => {
         const { name, options } = interaction.command;
         const args = {};
         if (options) options.forEach(option => args[option.name] = option.value);
@@ -52,7 +55,7 @@ client.on('ready', () => {
             else {
                 const remain = (cooldowns.get(name).get(interaction.author.id) - Date.now());
                 const ago = commands.get(name).cooldown - remain;
-                return interaction.callback(`${interaction.author.username},\nyou used this command like ${(ago / 1000).toFixed(1)} second${(ago / 1000) <= 1000 ? "s" : ""} ago.\nPlease wait at least ${(remain / 1000).toFixed(1)} second${(remain / 1000) <= 1000 ? "s" : ""} before using it again.`);
+                return await interaction.callback(`${interaction.author.username},\nyou used this command like ${(ago / 1000).toFixed(1)} second${(ago / 1000) <= 1000 ? "s" : ""} ago.\nPlease wait at least ${(remain / 1000).toFixed(1)} second${(remain / 1000) <= 1000 ? "s" : ""} before using it again.`);
             }
         }
 
@@ -64,11 +67,11 @@ client.on('ready', () => {
             }
             else {
                 const remain = (cooldowns.get(name).get(0) - Date.now());
-                return interaction.callback(`Someone already used this command.\nPlease wait at least ${(remain / 1000).toFixed(1)} second${(remain / 1000) <= 1000 ? "s" : ""} before using it.`);
+                return await interaction.callback(`Someone already used this command.\nPlease wait at least ${(remain / 1000).toFixed(1)} second${(remain / 1000) <= 1000 ? "s" : ""} before using it.`);
             }
         }
 
-        commands.get(name).execute(interaction, args, client);
+        return await commands.get(name).execute(interaction, args, client);
     });
 
     createCommands();
