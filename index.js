@@ -11,12 +11,14 @@ if (IsOnReplit) {
 
 const fs = require('fs');
 const Discord = require('discord.js');
-const DiscordSlash = require('discord.js-slash-command');
+const DiscordSlash = require('./discord.js-slash-command');
 const client = new Discord.Client();
 const slash = new DiscordSlash.Slash(client);
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 const { cooldowns, commands } = client;
+
+
 
 client.on('ready', () => {
     function createCommands() {
