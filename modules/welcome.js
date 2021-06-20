@@ -54,7 +54,7 @@ module.exports = (client) => {
 
             client.channels.fetch(welcomeMessage.channel).then(channel => {
                 channel.send(embed).then(() => {
-                    fs.rmSync(`temp/welcomeCard_${member.id}.png`);
+                    fs.rm(`temp/welcomeCard_${member.id}.png`);
                 });
             });
         });
