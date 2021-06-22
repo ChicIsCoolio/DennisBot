@@ -17,8 +17,7 @@ const slash = new DiscordSlash.Slash(client);
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 const { cooldowns, commands } = client;
-
-
+const config = require('./config.json');
 
 client.on('ready', () => {
     function createCommands() {
@@ -32,7 +31,7 @@ client.on('ready', () => {
                 o.setName(s[0]); o.setDescription(s[1]); o.setType(s[2]); o.setRequired(s[3] == 'true');
                 command.addOption(o);
             });
-            slash.create(command, "811874946111504387");
+            slash.create(command, config.guildId);
             commands.set(cmd.name, cmd);
         });
     }
@@ -73,11 +72,20 @@ client.on('ready', () => {
             }
         }
 
+        if (commands.get(name).permissions) {
+            for (const permission of commands.get(name).permissions) {
+                if (!interaction.channel.members.get(interaction.author.id).hasPermission(permission)) {
+                    interaction.callback(config.commands.noPermissions);
+                    return;
+                }
+            }
+        }
+
         return await commands.get(name).execute(interaction, args, client);
     });
 
     createCommands();
-    fs.readdirSync('modules').forEach(module => require('./modules/' + module)(client));
+    fs.readdirSync('modules').forEach(module => { require('./modules/' + module)(client);});
 });
 
 client.login(BotToken);

@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const config = require('./config.json');
 
 module.exports = [
     {
@@ -17,7 +18,7 @@ module.exports = [
         permissions: ['MANAGE_MESSAGES'],
         async execute(interaction, args) {
             woo = async callback => {
-                await interaction.callback(callback.size > 0 ? `Deleted ${callback.size} message${callback.size > 1 ? "s" : ""}, Ghost Boss!` : "Commander, I'm pretty sure I can't delete **nothing**.");
+                await interaction.callback(callback.size > 0 ? `Deleted ${callback.size} message${callback.size > 1 ? "s" : ""}, Ghost Boss!` : config.commands.clear.nothingToDelete);
                 setTimeout(() => fetch(`https://discord.com/api/v8/webhooks/740064676607426622/${interaction.token}/messages/@original`, { method: 'DELETE' }), 3000);
             };
             

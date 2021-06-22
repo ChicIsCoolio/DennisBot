@@ -1,4 +1,5 @@
 {
+    "guildId": "811874946111504387",
     "welcomeMessage": {
         "channel": "811874946968059916",
         "title": "Welcome $username$",
@@ -9,5 +10,11 @@
         "width": 800,
         "height": 400,
         "pfpSize": 256
+    },
+    "commands": {
+        "clear": {
+            "nothingToDelete": "Hey commander, you can't delete nothing. You know that, right?"
+        },
+        "noPermissions": "Sorry pal, you don't have the required permissions to use this command."
     }
 }

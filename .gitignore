@@ -1,4 +1,5 @@
 .env
 .replit
-node_modules/*
 *.xcf
+node_modules/*
+temp/*
