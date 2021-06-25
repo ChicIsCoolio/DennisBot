@@ -16,5 +16,9 @@
             "nothingToDelete": "Hey commander, you can't delete nothing. You know that, right?"
         },
         "noPermissions": "Sorry pal, you don't have the required permissions to use this command."
+    },
+    "server": {
+        "port": 80,
+        "onListen": "Server is now listening on port {0}"
     }
 }

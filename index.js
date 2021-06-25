@@ -1,3 +1,4 @@
+//#region INIT
 process.on('uncaughtException', err => console.error(err));
 require('dotenv').config();
 
@@ -8,6 +9,19 @@ if (IsOnReplit) {
     const { registerFont } = require('canvas');
     registerFont('fonts/BurbankBigRegular-Bold.otf', { family: 'Burbank Big Rg Bd' });
 }
+
+if (!String.prototype.format) {
+    String.prototype.format = function() {
+      var args = arguments;
+      return this.replace(/{(\d+)}/g, function(match, number) { 
+        return typeof args[number] != 'undefined'
+          ? args[number]
+          : match
+        ;
+      });
+    };
+  }
+//#endregion
 
 const fs = require('fs');
 const Discord = require('discord.js');
@@ -85,7 +99,7 @@ client.on('ready', () => {
     });
 
     createCommands();
-    fs.readdirSync('modules').forEach(module => { require('./modules/' + module)(client);});
+    fs.readdirSync('modules').forEach(module => { require('./modules/' + module)(client, { slash: slash });});
 });
 
 client.login(BotToken);
