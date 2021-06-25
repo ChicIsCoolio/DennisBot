@@ -1,4 +1,4 @@
-//#region INIT
+    //#region INIT
 process.on('uncaughtException', err => console.error(err));
 require('dotenv').config();
 
