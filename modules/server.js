@@ -13,10 +13,13 @@ module.exports = (client, other, sla) => {
         slash.get(null, config.guildId).then(commands => res.send(commands));
     });
 
-    app.delete('/commands/:guildId/:commandId', (req, res) => {
+    app.get('/commands/:commandId', (req, res) => {
+        slash.get(req.params.commandId, config.guildId).then(command => res.send(command));
+    });
+
+    app.delete('/commands/:commandId', (req, res) => {
         if (req.headers.authorization.split(' ')[1] == AccessToken) {
-            slash.delete(req.params.guildId, req.params.commandId);
-            res.status(200).end();
+            slash.delete(req.params.commandId, config.guildId).then(() => res.status(200).end());
         } else res.status(401).end();
     })
     

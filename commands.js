@@ -3,14 +3,6 @@ const config = require('./config.json');
 
 module.exports = [
     {
-        name: 'ping',
-        description: "Pong!",
-        globalCooldown: 10000,
-        async execute(interaction) {
-            await interaction.callback("Pong!");
-        }
-    },
-    {
         name: 'clear',
         displayName: "Clear",
         description: "Clears the desired number of messages.",
