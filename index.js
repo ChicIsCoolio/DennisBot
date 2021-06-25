@@ -42,7 +42,7 @@ client.on('ready', () => {
             if (cmd.options) cmd.options.forEach(option => {
                 const s = option.split(':');
                 const o = new DiscordSlash.CommandBuilder();
-                o.setName(s[0]); o.setDescription(s[1]); o.setType(s[2]); o.setRequired(s[3] == 'true');
+                o.setName(s[0]); o.setDescription(s[1]); o.setType(DiscordSlash.CommandType[s[2]]); o.setRequired(s[3] == 'true');
                 command.addOption(o);
             });
             slash.create(command, config.guildId);
