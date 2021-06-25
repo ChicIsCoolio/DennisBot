@@ -1,12 +1,33 @@
 const fetch = require('node-fetch');
 const config = require('./config.json');
 
+/* OPTION TYPES
+    SUB_COMMAND
+    SUB_COMMAND_GROUP
+    STRING
+    INTEGER
+    BOOLEAN
+    USER
+    CHANNEL
+    ROLE
+*/
+
 module.exports = [
     {
+        name: 'invite',
+        displayName: "Invite",
+        description: "Wanna get the server invite link?",
+        cooldown: 60000,
+        globalCooldown: 5000,
+        async execute(interaction, args) {
+            await interaction.callback("Here's the link:\n" + config.serverInvite);
+        }
+    },
+    {   
         name: 'clear',
         displayName: "Clear",
-        description: "Clears the desired number of messages.",
-        options: ['amount:The amount of messages you want to delete:4:true'],
+        description: "Deletes the desired number of messages.",
+        options: ['amount:The amount of messages you want to delete:INTEGER:true'],
         permissions: ['MANAGE_MESSAGES'],
         async execute(interaction, args) {
             woo = async callback => {
