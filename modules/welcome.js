@@ -47,7 +47,7 @@ module.exports = client => {
         .setColor(welcomeMessage.color)
         .setTitle(welcomeMessage.title.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()).replace('$memberCount$', member.guild.memberCount))
         .setDescription(welcomeMessage.message.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()).replace('$memberCount$', member.guild.memberCount))
-        .setAuthor(welcomeMessage.author.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()).replace('$memberCount$', member.guild.memberCount), member.user.displayAvatarURL())
+        .setAuthor(welcomeMessage.author.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()).replace('$memberCount$', member.guild.memberCount), member.user.avatarURL())
         .setFooter(welcomeMessage.footer.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()).replace('$memberCount$', member.guild.memberCount), member.guild.iconURL())
         .attachFiles([`temp/welcomeCard_${member.id}.png`])
         .setImage(`attachment://welcomeCard_${member.id}.png`)

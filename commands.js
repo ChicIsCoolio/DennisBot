@@ -1,4 +1,6 @@
+const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
+const InteractionManager = require('./discord.js-slash-command/src/Manager/InteractionManager');
 
 /* OPTION TYPES
     SUB_COMMAND
@@ -18,6 +20,9 @@ module.exports = [
         description: "Wanna get the server invite link?",
         cooldown: 60000,
         globalCooldown: 5000,
+        /**
+         * @param {InteractionManager} interaction
+         */
         async execute(interaction, args) {
             const config = require('./config.json');
 
@@ -30,6 +35,9 @@ module.exports = [
         description: "Deletes the desired number of messages.",
         options: ['amount:The amount of messages you want to delete:INTEGER:true'],
         permissions: ['MANAGE_MESSAGES'],
+        /**
+         * @param {InteractionManager} interaction
+         */
         async execute(interaction, args) {
             const config = require('./config.json');
 
@@ -43,6 +51,32 @@ module.exports = [
                 await woo(callback);
             }
             else await woo({size: 0});
+        }
+    },
+    {
+        name: 'report',
+        displayName: "Report",
+        description: "Report people that arent nice",
+        options: ['who:Who do you want to report?:USER:true', 'why:What did the person do?:STRING:true'],
+        /**
+         * @param {InteractionManager} interaction
+         */
+        async execute(interaction, args, client) {
+            const { report } = require('./config.json').commands;
+            const { embed } = report;
+            const who = await interaction.channel.guild.members.fetch(args.who);
+
+            const pin = await interaction.channel.send(report.pin);
+            const url = `https://discord.com/channels/${interaction.channel.guild.id}/${interaction.channel.id}/${pin.id}`;
+            const e = new MessageEmbed().setTitle(embed.title.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag))
+                .setDescription(embed.description.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag))
+                .setColor(embed.color).setAuthor(embed.author.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag),
+                    embed.author.includes('{5}') ? who.user.avatarURL() : embed.author.includes('{4}') ? interaction.author.avatarURL() : '')
+                .setFooter(embed.footer.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag),
+                    embed.footer.includes('{5}') ? who.user.avatarURL() : embed.footer.includes('{4}') ? interaction.author.avatarURL() : '');
+            
+            await (await client.channels.fetch(report.channel)).send(e);
+            await interaction.callback('Done!');
         }
     }
 ];

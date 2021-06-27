@@ -14,14 +14,14 @@ class Slash extends EventEmitter {
      */
     constructor(client){
         super();
-        client.on("ready", ()=>{
+        client.on("ready", () => {
             this.client = client;
             this.token = client.token;
             this.appid = client.user.id;
             client.ws.on("INTERACTION_CREATE", interaction => {
                 client.channels.fetch(interaction.channel_id);
-                client.users.fetch(interaction.member.user.id).then((user)=>{
-                    let interactions = new InteractionManager(interaction, this.client);
+                client.users.fetch(interaction.member.user.id).then(async () => {
+                    let interactions = await new InteractionManager(interaction, this.client);
                     interactions.callback = function(callback){
                         return client.api.interactions(interaction.id, interaction.token).callback.post(JSON.parse(`{"data":{"type":4,"data":`+((typeof(callback) == "object") ? JSON.stringify({embeds: [callback]}) : JSON.stringify({content: callback}))+`}}`));
                     }
