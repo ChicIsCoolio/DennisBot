@@ -6,7 +6,7 @@
         "title": "Welcome",
         "message": "$mention$ welcome to ChicLand!\n<:chic:858713409263894538>",
         "author": "$tag$",
-        "footer": "$members$ Members",
+        "footer": "$memberCount$ Members",
         "color": "#e7acca",
         "backgroundColor": "#2c2f33",
         "width": 800,

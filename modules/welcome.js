@@ -45,9 +45,10 @@ module.exports = client => {
         //Discord Message
         const embed = new Discord.MessageEmbed()
         .setColor(welcomeMessage.color)
-        .setTitle(welcomeMessage.title.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()))
-        .setDescription(welcomeMessage.message.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()))
-        .setAuthor(welcomeMessage.author.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()), member.user.displayAvatarURL())
+        .setTitle(welcomeMessage.title.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()).replace('$memberCount$', member.guild.memberCount))
+        .setDescription(welcomeMessage.message.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()).replace('$memberCount$', member.guild.memberCount))
+        .setAuthor(welcomeMessage.author.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()).replace('$memberCount$', member.guild.memberCount), member.user.displayAvatarURL())
+        .setFooter(welcomeMessage.footer.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()).replace('$memberCount$', member.guild.memberCount), member.guild.iconURL())
         .attachFiles([`temp/welcomeCard_${member.id}.png`])
         .setImage(`attachment://welcomeCard_${member.id}.png`)
         .setTimestamp();
