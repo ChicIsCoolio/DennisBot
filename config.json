@@ -3,9 +3,10 @@
     "serverInvite": "https://discord.gg/DJQnpfxy9H",
     "welcomeMessage": {
         "channel": "811874946968059916",
-        "title": "Welcome $username$",
-        "message": "Welcome to Chic's super cool server.",
-        "footer": "$tag$",
+        "title": "Welcome",
+        "message": "$mention$ welcome to ChicLand!\n<:chic:858713409263894538>",
+        "author": "$tag$",
+        "footer": "$members$ Members",
         "color": "#e7acca",
         "backgroundColor": "#2c2f33",
         "width": 800,

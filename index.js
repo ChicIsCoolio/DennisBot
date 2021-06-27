@@ -31,10 +31,10 @@ const slash = new DiscordSlash.Slash(client);
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 const { cooldowns, commands } = client;
-const config = require('./config.json');
 
 client.on('ready', () => {
     function createCommands() {
+        const config = require('./config.json');
         require('./commands').forEach(cmd => {
             const command = new DiscordSlash.CommandBuilder();
             command.setName(cmd.name);
@@ -56,6 +56,7 @@ client.on('ready', () => {
     });
 
     slash.on('slashInteraction', async interaction => {
+        const config = require('./config.json');
         const { name, options } = interaction.command;
         const args = {};
         if (options) options.forEach(option => args[option.name] = option.value);

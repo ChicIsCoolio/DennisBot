@@ -47,7 +47,7 @@ module.exports = client => {
         .setColor(welcomeMessage.color)
         .setTitle(welcomeMessage.title.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()))
         .setDescription(welcomeMessage.message.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()))
-        .setFooter(welcomeMessage.footer.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()), member.user.displayAvatarURL())
+        .setAuthor(welcomeMessage.author.replace('$username$', member.displayName).replace('$tag$', member.user.tag).replace('$mention$', member.toString()), member.user.displayAvatarURL())
         .attachFiles([`temp/welcomeCard_${member.id}.png`])
         .setImage(`attachment://welcomeCard_${member.id}.png`)
         .setTimestamp();
