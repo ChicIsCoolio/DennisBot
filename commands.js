@@ -63,21 +63,44 @@ module.exports = [
          */
         async execute(interaction, args, client) {
             const { report } = require('./config.json').commands;
-            const { embed } = report;
             const who = await interaction.channel.guild.members.fetch(args.who);
 
             const pin = await interaction.channel.send(report.pin);
             const url = `https://discord.com/channels/${interaction.channel.guild.id}/${interaction.channel.id}/${pin.id}`;
-            const e = new MessageEmbed().setTitle(embed.title.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag))
-                .setDescription(embed.description.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag))
-                .setColor(embed.color).setAuthor(embed.author.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag),
-                    embed.author.includes('{5}') ? who.user.avatarURL() : embed.author.includes('{4}') ? interaction.author.avatarURL() : '')
-                .setFooter(embed.footer.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag),
-                    embed.footer.includes('{5}') ? who.user.avatarURL() : embed.footer.includes('{4}') ? interaction.author.avatarURL() : '')
+            const embed = new MessageEmbed().setTitle(report.title.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag))
+                .setDescription(report.description.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag))
+                .setColor(report.color).setAuthor(report.author.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag),
+                    report.author.includes('{5}') ? who.user.avatarURL() : report.author.includes('{4}') ? interaction.author.avatarURL() : '')
+                .setFooter(report.footer.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag),
+                    report.footer.includes('{5}') ? who.user.avatarURL() : report.footer.includes('{4}') ? interaction.author.avatarURL() : '')
                 .setTimestamp();
             
-            await (await client.channels.fetch(report.channel)).send(e);
-            await interaction.callback('Done!');
+            await (await client.channels.fetch(report.channel)).send(embed);
+            await interaction.callback(report.done);
+        }
+    },
+    {
+        name: 'warn',
+        displayName: "Warn",
+        description: "Warn someone",
+        options: ['who:Who do you want to warn?:USER:true', 'message:Message to the persons:STRING:true'],
+        /**
+         * @param {InteractionManager} interaction
+         */
+        async execute(interaction, args, client) {
+            const { warn } = require('./config.json').commands;
+            const who  = await interaction.channel.guild.members.fetch(args.who);
+            if (who.user.bot) return await interaction.callback(warn.isBot);
+            const channel = await who.createDM();
+
+            const embed = new MessageEmbed().setTitle(warn.title.format(interaction.author, who, args.message))
+                .setDescription(warn.description.format(interaction.author, who, args.message))
+                .setColor(warn.color).setFooter(warn.footer.format(interaction.author, who, args.message),
+                    warn.footer.includes('{5}') ? who.user.avatarURL() : warn.footer.includes('{4}') ? interaction.author.avatarURL() : '')
+                .setTimestamp();
+
+            await channel.send(embed);
+            await interaction.callback(warn.done.format(interaction.author, who, args.message));
         }
     }
 ];

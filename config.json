@@ -18,15 +18,22 @@
             "nothingToDelete": "Hey commander, you can't delete nothing. You know that, right?"
         },
         "report": {
+            "done": "Report sent!",
             "channel": "858756260148936724",
             "pin": "Just a nice pin for the mods. 😉",
-            "embed": {
-                "title": "New report received!",
-                "description": "{0} reported {1}.\nReason:\n{2}\n\nPin:\n{3}",
-                "color": "#ff002f",
-                "author": "{5}",
-                "footer": "{4}"
-            }
+            "title": "New report received!",
+            "description": "{0} reported {1}.\nReason:\n{2}\n\nPin:\n{3}",
+            "color": "#ff002f",
+            "author": "{5}",
+            "footer": "{4}"
+        },
+        "warn": {
+            "done": "Warned {1}.",
+            "isBot": "Sorry, I can't warn bots.",
+            "title": "You've been warned!",
+            "description": "{0} warned you.\nMessage:\n{2}",
+            "color": "#ff6600",
+            "footer": "{0}"
         },
         "noPermissions": "Sorry pal, you don't have the required permissions to use this command."
     },
