@@ -17,7 +17,7 @@ module.exports = [
     {
         name: 'invite',
         displayName: "Invite",
-        description: "Wanna get the server invite link?",
+        description: "Sends the server invite link",
         cooldown: 60000,
         globalCooldown: 5000,
         /**
@@ -56,7 +56,7 @@ module.exports = [
     {
         name: 'report',
         displayName: "Report",
-        description: "Report people that arent nice",
+        description: "Report someone",
         options: ['who:Who do you want to report?:USER:true', 'why:What did the person do?:STRING:true'],
         /**
          * @param {InteractionManager} interaction
@@ -73,7 +73,8 @@ module.exports = [
                 .setColor(embed.color).setAuthor(embed.author.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag),
                     embed.author.includes('{5}') ? who.user.avatarURL() : embed.author.includes('{4}') ? interaction.author.avatarURL() : '')
                 .setFooter(embed.footer.format(interaction.author, who, args.why, url, interaction.author.tag, who.user.tag),
-                    embed.footer.includes('{5}') ? who.user.avatarURL() : embed.footer.includes('{4}') ? interaction.author.avatarURL() : '');
+                    embed.footer.includes('{5}') ? who.user.avatarURL() : embed.footer.includes('{4}') ? interaction.author.avatarURL() : '')
+                .setTimestamp();
             
             await (await client.channels.fetch(report.channel)).send(e);
             await interaction.callback('Done!');
