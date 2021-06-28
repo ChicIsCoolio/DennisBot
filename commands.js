@@ -84,6 +84,7 @@ module.exports = [
         displayName: "Warn",
         description: "Warn someone",
         options: ['who:Who do you want to warn?:USER:true', 'message:Message to the persons:STRING:true'],
+        permissions: ['KICK_MEMBERS'],
         /**
          * @param {InteractionManager} interaction
          */
